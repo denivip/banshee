@@ -247,6 +247,11 @@
     if ([[[request URL] absoluteString] isEqualToString:@"js:gh-page-loaded"]) {
         [self webViewDidFinishFinalLoad:webView_];
     }
+
+    else if (! [viewController tabWebView:webView_ shouldStartLoadWithRequest:request]) {
+        [self webViewDidFinishFinalLoad:webView_];
+        return NO;
+    }
     
 	//CAPTURE USER LINK-CLICK.
 	else if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeFormSubmitted) {

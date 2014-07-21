@@ -152,4 +152,8 @@
 -(void) openSavedTabs;
 -(void) deleteSavedTabs;
 
+#pragma mark - Override in subclass
+
+- (BOOL)tabWebView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request;
+
 @end
