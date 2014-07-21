@@ -46,7 +46,6 @@
 	
 	[nameField becomeFirstResponder];
 	
-	self.contentSizeForViewInPopover = CGSizeMake(320.0, 480.0);
 	[super viewDidLoad];
 }
 
@@ -87,6 +86,11 @@
 	[bookmarksController reloadBookmarks];
 	[[bookmarksController tableView] reloadData];
 	[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (CGSize)preferredContentSize
+{
+    return CGSizeMake(320.0, 480.0);
 }
 
 - (void)didReceiveMemoryWarning {

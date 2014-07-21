@@ -63,20 +63,20 @@ typedef enum ScrollDirection {
     //size statusbar
     [(UIMainView *)[self view] sizeStatusBar];
     // Set up bookmark controllers
-	BookmarksFormController *bookmarksFormController = [[BookmarksFormController alloc]
+	BookmarksFormController *bookmarksFormController_ = [[BookmarksFormController alloc]
                                                         initWithNibName:@"BookmarksForm"
                                                         bundle:[NSBundle mainBundle]];
 	BookmarkFolderFormController *bookmarkFolderFormController = [[BookmarkFolderFormController alloc]
 																  initWithNibName:@"BookmarkFoldersForm"
 																  bundle:[NSBundle mainBundle]];
 	
-	BookmarksController *bookmarksController = [[BookmarksController alloc] initWithNibName:@"Bookmarks" bundle:[NSBundle mainBundle]];
-	UINavigationController *bookmarksNavController = [[UINavigationController alloc] initWithRootViewController:bookmarksController];
+	BookmarksController *bookmarksController_ = [[BookmarksController alloc] initWithNibName:@"Bookmarks" bundle:[NSBundle mainBundle]];
+	UINavigationController *bookmarksNavController = [[UINavigationController alloc] initWithRootViewController:bookmarksController_];
 	
-	[self setBookmarksFormController:bookmarksFormController];
-	[bookmarksController setBrowserController:self];
-	[bookmarkFolderFormController setBookmarksController:bookmarksController];
-	[bookmarksController setFolderController:bookmarkFolderFormController];
+	[self setBookmarksFormController:bookmarksFormController_];
+	[bookmarksController_ setBrowserController:self];
+	[bookmarkFolderFormController setBookmarksController:bookmarksController_];
+	[bookmarksController_ setFolderController:bookmarkFolderFormController];
 	[self setBookmarksController:bookmarksNavController];
     
     // Tweak address bar view so text doesn't overflow
@@ -202,14 +202,13 @@ typedef enum ScrollDirection {
 
 -(IBAction)scrollToTop:(id)sender {
     if (![self isPad]) {
-        BOOL animated = ![sender isKindOfClass:[NSNotification class]];
         [[[self webView] scrollView] setContentOffset:CGPointMake(0, - topBar.frame.size.height) animated:NO];
         [[[self webView] scrollView] setContentInset:UIEdgeInsetsMake(-[[self webView] scrollView].contentOffset.y, 0, 0, 0)];
     }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    ScrollDirection scrollDirection;
+    ScrollDirection scrollDirection = ScrollDirectionNone;
     int minWebViewSize = webViewTemplate.frame.size.height;
     int maxWebViewSize = minWebViewSize + bottomBar.frame.size.height;
     if (self.lastScrollContentOffset > scrollView.contentOffset.y)
@@ -544,7 +543,7 @@ typedef enum ScrollDirection {
         
 		if (popupQuery.visible || barItemPopoverPresenter == moreButton) {
 			barItemPopoverPresenter = nil;
-			[popupQuery dismissWithClickedButtonIndex:nil animated:YES];
+			[popupQuery dismissWithClickedButtonIndex:0 animated:YES];
 		} else {
             [self generatePopupQuery];
 			barItemPopoverPresenter = moreButton;
@@ -880,7 +879,7 @@ typedef enum ScrollDirection {
     // Return the orientation you'd prefer - this is what it launches to. The
     // user can still rotate. You don't have to implement this method, in which
     // case it launches in the current orientation
-    return UIDeviceOrientationPortrait;
+    return UIInterfaceOrientationPortrait;
 }
 
 
@@ -888,7 +887,7 @@ typedef enum ScrollDirection {
 - (BOOL) checkNetworkStatus
 {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
-    NetworkStatus *netstat = [reachability currentReachabilityStatus];
+    NetworkStatus netstat = [reachability currentReachabilityStatus];
     return netstat != NotReachable;
 }
 
@@ -901,6 +900,19 @@ typedef enum ScrollDirection {
 #endif
 }
 
+- (void)toggleTabsView:(id)sender
+{
 
+}
+
+- (void)customButtonClick:(id)sender
+{
+
+}
+
+- (void)customButtonClick2:(id)sender
+{
+    
+}
 
 @end

@@ -16,6 +16,8 @@
 
 @implementation BookmarkImporter
 
+@synthesize allNodes = allNodes;
+
 @synthesize managedObjectContext, rootFolder;
 
 - (void)loadBookmarksFromUrl:(NSURL *) url{
@@ -27,17 +29,17 @@
         NSLog(@"After managedObjectContext: %@",  managedObjectContext);
 	}
     
-    
-    NSString *bookmarkHTML = [NSString stringWithContentsOfURL:url];
-    
+
+    NSString *bookmarkHTML = [[NSString alloc] initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:NULL];
+
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<DT>|<dt>|<p>|</p>|FOLDED|\n|\t|\r|<meta[^>]*|<!--(.|\n|\r)*-->|<!DOCTYPE.*>" options:NSRegularExpressionCaseInsensitive error:&error];
     bookmarkHTML = [regex stringByReplacingMatchesInString:bookmarkHTML options:0 range:NSMakeRange(0, [bookmarkHTML length]) withTemplate:@""];
     //bookmarkHTML = [bookmarkHTML stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
     if ([[bookmarkHTML lowercaseString] rangeOfString:@"<html>"].location != NSNotFound) {
         bookmarkHTML = [bookmarkHTML stringByReplacingOccurrencesOfString:@"<HTML>" withString:@"<root>"];
         bookmarkHTML = [bookmarkHTML stringByReplacingOccurrencesOfString:@"<html>" withString:@"<root>"];
-        bookmarkHTML = [bookmarkHTML stringByReplacingOccurrencesOfString:@"<\HTML>" withString:@"<\root>"];
-        bookmarkHTML = [bookmarkHTML stringByReplacingOccurrencesOfString:@"<\html>" withString:@"<\root>"];
+        bookmarkHTML = [bookmarkHTML stringByReplacingOccurrencesOfString:@"<\\HTML>" withString:@"<\\root>"];
+        bookmarkHTML = [bookmarkHTML stringByReplacingOccurrencesOfString:@"<\\html>" withString:@"<\\root>"];
     } else {
         bookmarkHTML = [NSString stringWithFormat:@"<root>%@</root>", bookmarkHTML];
     }
@@ -75,7 +77,7 @@
         }
         if (nodeName != nil && [nodeName isEqualToString:@"h3"]) {
             NSManagedObject *folder = [NSEntityDescription insertNewObjectForEntityForName:@"Folder" inManagedObjectContext:managedObjectContext];
-            NSString *name = [NSString stringWithCString:node->children->content encoding:NSUTF8StringEncoding];
+            NSString *name = [NSString stringWithCString:(const char *)node->children->content encoding:NSUTF8StringEncoding];
             name = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             [folder setValue:name forKey:@"name"];
@@ -84,7 +86,7 @@
                 
                 NSLog(@"folder:%@ parent:%@", [folder valueForKey:@"name"], [[folder valueForKey:@"Parent"] valueForKey:@"name"]);
             }
-            xmlNodePtr nextNode;
+            xmlNodePtr nextNode = NULL;
             NSString *nextNodeName = nil;
             for (int z = i + 1; z < [nodes count]; z++) {
                 nextNode = [[nodes objectAtIndex:z] pointerValue];
@@ -95,8 +97,10 @@
                     break;
                 }
             }
-            [self loadBookmarksFromChildrenNodes:nextNode->children inFolder:folder scanDL:NO];
-            
+            if (nextNode != NULL) {
+                [self loadBookmarksFromChildrenNodes:nextNode->children inFolder:folder scanDL:NO];
+            }
+
         } else if (nodeName != nil && [nodeName isEqualToString:@"a"]) {
             xmlAttr *attr = node->properties;
             while (attr) {

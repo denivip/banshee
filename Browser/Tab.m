@@ -12,7 +12,7 @@
 
 @implementation Tab
 
-@synthesize tabButton, webView, closeButton, tabTitle, history, traverse, history_position, scrollPosition, currentURLString, currentURL, current, urlConnection, connectionURLString, actionSheetVisible, loadStartTime, loadEndTime, pageInfoJS, response, viewController, loading;
+@synthesize tabButton, webView, closeButton, tabTitle, history, traverse, history_position, scrollPosition, currentURLString, currentURL, current, urlConnection, connectionURLString, actionSheetVisible, loadStartTime, loadEndTime, pageInfoJS, response, viewController, loading, pageData;
 
 -(id) initWithFrame:(CGRect)frame addTarget:(BrowserViewController *) vc {
 	if ((self = [super initWithFrame:frame])) {
@@ -54,7 +54,7 @@
 		[self addSubview:closeButton];
 	
 		// Set up webview
-        UIWebView *wvTemplate = (UIView *)[viewController webViewTemplate];
+        UIWebView *wvTemplate = (UIWebView *)[viewController webViewTemplate];
         int minWebViewSize = wvTemplate.frame.size.height;
         int maxWebViewSize = minWebViewSize + [viewController bottomBar].frame.size.height;
         int height = [viewController bottomBar].alpha > 0.0 ? minWebViewSize : maxWebViewSize;
@@ -164,11 +164,11 @@
     }
 }
 
-- (void)connection: (NSURLConnection*) connection didReceiveResponse: (NSHTTPURLResponse*) response
+- (void)connection: (NSURLConnection*) connection didReceiveResponse: (NSHTTPURLResponse*) response_
 {
-    self.currentURL = [response URL];
-    self.currentURLString = [[response URL] absoluteString];
-    [self setResponse:response];
+    self.currentURL = [response_ URL];
+    self.currentURLString = [[response_ URL] absoluteString];
+    [self setResponse:response_];
     if (current) {
         [[self progressBar] setProgress:0.25 animated:NO];
     }
@@ -185,8 +185,6 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSURLRequest *request = [connection originalRequest];
-    
     if ([pageData length] == 0) {
         [[self history] removeLastObject];
         self.currentURL = [[[self history] lastObject] URL];
@@ -199,8 +197,9 @@
         return;
     }
     if ([[response MIMEType] isEqualToString:@"text/html"] || [[response MIMEType] isEqualToString:@"application/xhtml+xml"] || [[response MIMEType] isEqualToString:@"text/vnd.wap.wml"]) {
-        NSStringEncoding *enc;
+        NSStringEncoding enc;
         if ([response textEncodingName] != nil) {
+            CFStringConvertIANACharSetNameToEncoding((CFStringRef)[response textEncodingName]);
             enc = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding((CFStringRef)[response textEncodingName]));
         } else {
             enc = NSUTF8StringEncoding;
@@ -226,7 +225,6 @@
     if ([[connection currentRequest] URL] != NULL) {
         [viewController cannotConnect:webView];
     } else {
-    NSString *urlAddress = @"";
      [[self webView] loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"launch" ofType:@"html"]isDirectory:NO]]];
      [[viewController addressBar] setText:@""];
     }
@@ -239,7 +237,7 @@
 #pragma mark -
 #pragma mark webview delegate
 
--(BOOL) webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+-(BOOL) webView:(UIWebView*)webView_ shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
     
     if (request == nil) {
         return NO;
@@ -247,7 +245,7 @@
     
     // CAPTURE PAGE LOAD
     if ([[[request URL] absoluteString] isEqualToString:@"js:gh-page-loaded"]) {
-        [self webViewDidFinishFinalLoad:webView];
+        [self webViewDidFinishFinalLoad:webView_];
     }
     
 	//CAPTURE USER LINK-CLICK.
@@ -272,29 +270,28 @@
 -(void) webViewDidStartLoad:(UIWebView *)webView {
 }
 
--(void) webViewDidFinishFinalLoad:(UIWebView *)webView {
+-(void) webViewDidFinishFinalLoad:(UIWebView *)webView_ {
     self.loading = NO;
     if (current) {
-        [viewController currentWebViewDidFinishFinalLoad:webView];
+        [viewController currentWebViewDidFinishFinalLoad:webView_];
     }
     
-    NSLog(@"Loaded url: %@", [webView.request mainDocumentURL]);
+    NSLog(@"Loaded url: %@", [webView_.request mainDocumentURL]);
     
     // set title
-    NSString *tabTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-    NSString *url = [webView stringByEvaluatingJavaScriptFromString:@"window.location.href"];
-    if ([tabTitle length] == 0) {
+    NSString *tabTitle_ = [webView_ stringByEvaluatingJavaScriptFromString:@"document.title"];
+    if ([tabTitle_ length] == 0) {
         [self setTitle:@"Untitled"];
     } else {
-        [self setTitle:tabTitle];
+        [self setTitle:tabTitle_];
     }
 }
 
--(void) webViewDidFinishLoad:(UIWebView *)webView {
+-(void) webViewDidFinishLoad:(UIWebView *)webView_ {
     
     
-    if (![[[webView request] URL] isFileURL] && currentURL != nil) {
-        [webView stringByEvaluatingJavaScriptFromString:@"if (document.getElementById('gh-page-loaded') == null && document.documentElement.innerHTML != '<head></head><body></body>') {"
+    if (![[[webView_ request] URL] isFileURL] && currentURL != nil) {
+        [webView_ stringByEvaluatingJavaScriptFromString:@"if (document.getElementById('gh-page-loaded') == null && document.documentElement.innerHTML != '<head></head><body></body>') {"
          "var iframe = document.createElement('IFRAME');"
          "iframe.setAttribute('id','gh-page-loaded');"
          "iframe.setAttribute('src', 'js:gh-page-loaded');"
@@ -319,7 +316,6 @@
     pt = [webView convertPoint:pt fromView:nil];
     
     // convert point from view to HTML coordinate system
-    CGPoint offset  = [self scrollOffset];
     CGSize viewSize = [webView frame].size;
     CGSize windowSize = [self windowSize];
     
@@ -446,7 +442,7 @@
 }
 
 -(void) go:(int)t {
-    NSArray *req;
+    NSURLRequest *req;
     [viewController forwardButton].enabled = FALSE;
     [viewController backButton].enabled = FALSE;
     traverse = t;
