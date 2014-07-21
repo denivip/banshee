@@ -259,7 +259,7 @@
                 if (current) {
                     [[viewController addressBar] setText:[URL absoluteString]];
                 }
-                [viewController gotoAddress:nil withRequestObj:request inTab:self];
+                [viewController loadRequest:request inTab:self updateHistory:YES];
             }
             return NO;
         }
@@ -394,7 +394,7 @@
     NSURL *url = [NSURL URLWithString:[actionSheet title]];
     NSString *clickedButton = [actionSheet buttonTitleAtIndex:buttonIndex];
     if ([clickedButton isEqualToString:@"Open Link"]) {
-        [viewController gotoAddress:nil withRequestObj:[[NSURLRequest alloc] initWithURL:url] inTab:self];
+        [viewController loadRequest:[[NSURLRequest alloc] initWithURL:url] inTab:self updateHistory:YES];
     } else if ([clickedButton isEqualToString:@"Open Link in New Tab"]) {
         [viewController addTabWithURL:[NSURL URLWithString:[actionSheet title]]];
     } else if ([clickedButton isEqualToString:@"Copy Link"]) {
@@ -451,7 +451,7 @@
     
     //[[viewController addressBar] setText:[[req URL] absoluteString]];
     if (req != nil) {
-        [viewController gotoAddress:nil withRequestObj:req inTab:self];
+        [viewController loadRequest:req inTab:self updateHistory:YES];
     }
 }
 

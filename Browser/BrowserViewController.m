@@ -363,7 +363,7 @@ typedef enum ScrollDirection {
     [self loadTabs:webView];
 }
 
--(void) gotoAddress:(id) sender withRequestObj:(NSURLRequest *)request inTab:(Tab *)tab {
+- (void)loadRequest:(NSURLRequest *)request inTab:(Tab *)tab updateHistory:(BOOL)updateHistory {
     // Clear detected bugs
     tab.currentURLString = @"";
     [self setInitialPageLoad:YES];
@@ -398,7 +398,7 @@ typedef enum ScrollDirection {
             [progressBar setProgress:0.1 animated:NO];
             tab.urlConnection = nil;
             tab.urlConnection = [[NSURLConnection alloc] initWithRequest:mRequest delegate:tab];
-            if (sender != refreshButton) {
+            if (updateHistory) {
                 [tab updateHistory];
             }
         }
@@ -443,7 +443,7 @@ typedef enum ScrollDirection {
     }
     NSURLRequest *request = [NSURLRequest requestWithURL:gotoUrl];
     if ([inputText rangeOfString:@"."].location != NSNotFound && [NSURLConnection canHandleRequest:request]){
-        [self gotoAddress:sender withRequestObj:request inTab:selectedTab];
+        [self loadRequest:request inTab:selectedTab updateHistory:(sender != refreshButton)];
     } else {
         [self searchWeb:sender];
     }
@@ -465,7 +465,7 @@ typedef enum ScrollDirection {
     
     // Load the request in the UIWebView.
     if ([self checkNetworkStatus]) {
-        [self gotoAddress:sender withRequestObj:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] inTab:selectedTab];
+        [self loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] inTab:selectedTab updateHistory:(sender != refreshButton)];
     } else {
         [self cannotConnect:nil];
         [progressBar setHidden:YES];
@@ -680,7 +680,7 @@ typedef enum ScrollDirection {
         }
         
     } else {
-        [self gotoAddress:nil withRequestObj:[[NSURLRequest alloc] initWithURL:URL] inTab:selectedTab];
+        [self loadRequest:[[NSURLRequest alloc] initWithURL:URL] inTab:selectedTab updateHistory:YES];
     }
     
 	[self loadTabs:[selectedTab webView]];

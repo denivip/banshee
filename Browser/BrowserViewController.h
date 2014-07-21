@@ -146,7 +146,7 @@
 
 -(void) cannotConnect:(UIWebView *) cnWebView;
 
--(void) gotoAddress:(id) sender withRequestObj:(NSURLRequest *)request inTab:(Tab *)tab;
+- (void)loadRequest:(NSURLRequest *)request inTab:(Tab *)tab updateHistory:(BOOL)updateHistory;
 
 -(void) saveOpenTabs;
 -(void) openSavedTabs;
