@@ -125,7 +125,7 @@
 -(void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 -(IBAction) addTab:(id)sender;
--(void) addTabWithAddress:(NSString *)urlAddress;
+- (void)addTabWithURL:(NSURL *)URL;
 -(IBAction) selectTab:(id)sender;
 -(IBAction) removeTab:(id)sender;
 -(IBAction) toggleTabsView:(id)sender;

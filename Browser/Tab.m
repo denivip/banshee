@@ -400,7 +400,7 @@
     if ([clickedButton isEqualToString:@"Open Link"]) {
         [viewController gotoAddress:nil withRequestObj:[[NSURLRequest alloc] initWithURL:url] inTab:self];
     } else if ([clickedButton isEqualToString:@"Open Link in New Tab"]) {
-        [viewController addTabWithAddress:[actionSheet title]];
+        [viewController addTabWithURL:[NSURL URLWithString:[actionSheet title]]];
     } else if ([clickedButton isEqualToString:@"Copy Link"]) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
         pasteboard.string = [url absoluteString];

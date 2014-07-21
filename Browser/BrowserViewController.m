@@ -146,7 +146,7 @@ typedef enum ScrollDirection {
     NSMutableArray *tabFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
     
     for (NSManagedObject *tab in tabFetchResults) {
-        [self addTabWithAddress:[tab valueForKey:@"url"]];
+        [self addTabWithURL:[NSURL URLWithString:[tab valueForKey:@"url"]]];
         [selectedTab setTitle:[tab valueForKey:@"title"]];
         
         [managedObjectContext deleteObject:tab];
@@ -641,11 +641,11 @@ typedef enum ScrollDirection {
     if (tabsView.hidden) {
         [self toggleTabsView:sender];
     }
-    [self addTabWithAddress:@""];
+    [self addTabWithURL:nil];
 }
 
--(void) addTabWithAddress:(NSString *)urlAddress {
-
+- (void)addTabWithURL:(NSURL *)URL
+{
 	if ([tabs count] == 0) {
 		tabs = [[NSMutableArray alloc] initWithCapacity:8];
 	}
@@ -671,17 +671,17 @@ typedef enum ScrollDirection {
     
 	tabsView.clipsToBounds = YES;
 	tabsView.showsHorizontalScrollIndicator = NO;
-	
-    if ([urlAddress isEqualToString:@""]) {
+
+    if (!URL) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"launch" ofType:@"html"];
         NSData *launchData = [NSData dataWithContentsOfFile:path];
         [[self webView] loadData:launchData MIMEType:@"text/html" textEncodingName:@"utf-8" baseURL:nil];
         if (![addressBar isFirstResponder])  {
-            [addressBar setText:urlAddress];
+            [addressBar setText:[URL absoluteString]];
         }
         
     } else {
-        [self gotoAddress:nil withRequestObj:[[NSURLRequest alloc] initWithURL:[NSURL URLWithString:urlAddress]] inTab:selectedTab];
+        [self gotoAddress:nil withRequestObj:[[NSURLRequest alloc] initWithURL:URL] inTab:selectedTab];
     }
     
 	[self loadTabs:[selectedTab webView]];
