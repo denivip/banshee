@@ -447,10 +447,7 @@
     [viewController backButton].enabled = FALSE;
     traverse = t;
     history_position += traverse;
-    if (history_position >= [history count] || history_position < 0) {
-        req = [history lastObject];
-    }
-     req = [history objectAtIndex:history_position];
+    req = [history objectAtIndex:history_position];
     
     //[[viewController addressBar] setText:[[req URL] absoluteString]];
     if (req != nil) {

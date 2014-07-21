@@ -148,12 +148,14 @@
 
 }
 
-- (void) save:(NSError **) err {
+- (BOOL) save:(NSError **) err {
     if (managedObjectContext != nil)
 	{
-        [managedObjectContext save:err];
+        return [managedObjectContext save:err];
         //NSLog(@"managed error: %@ %@ %@ %i", [*err localizedDescription], [*err helpAnchor], [*err domain], [*err code]);
     }
+
+    return NO;
 }
 
 

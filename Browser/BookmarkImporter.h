@@ -21,7 +21,7 @@
 - (void) loadBookmarksFromChildrenNodes:(xmlNodePtr)children inFolder:(NSManagedObject *)parentFolder scanDL:(BOOL)scanDL;
 - (void) loadBookmarksFromAllNodesinFolder:(NSManagedObject *)parentFolder scanDL:(BOOL)scanDL;
 
-- (void) save:(NSError **) err;
+- (BOOL) save:(NSError **) err;
 
 @property(nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property(nonatomic, strong) NSManagedObject *rootFolder;
