@@ -48,10 +48,10 @@
                             </constraints>
                             <color key="progressTintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                         </progressView>
-                        <textField opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search or enter address" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iFX-iJ-cHp" userLabel="AddressBarTextField">
+                        <textField opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Search or enter address" minimumFontSize="17" background="textfield_bg" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iFX-iJ-cHp" userLabel="AddressBarTextField" customClass="ARBURLTextField">
                             <rect key="frame" x="7" y="24" width="306" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                            <color key="backgroundColor" red="0.90246332910000004" green="0.90246332910000004" blue="0.90246332910000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <accessibility key="accessibilityConfiguration" label="Address or search field">
                                 <accessibilityTraits key="traits" none="YES" playsSound="YES"/>
@@ -63,22 +63,21 @@
                                 <action selector="gotoAddress:" destination="-1" eventType="editingDidEndOnExit" id="LwF-gJ-QBt"/>
                             </connections>
                         </textField>
-                        <button alpha="0.59999999999999964" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="135" userLabel="Add Tab">
-                            <rect key="frame" x="276" y="55" width="44" height="22"/>
+                        <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="135" userLabel="Add Tab">
+                            <rect key="frame" x="278" y="58" width="42" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <accessibility key="accessibilityConfiguration" label="Add Tab"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="44" id="ChV-bc-Tpi"/>
-                                <constraint firstAttribute="height" constant="22" id="xKT-5d-T6c"/>
+                                <constraint firstAttribute="width" constant="42" id="ChV-bc-Tpi"/>
+                                <constraint firstAttribute="height" constant="20" id="xKT-5d-T6c"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                            <inset key="contentEdgeInsets" minX="11" minY="0.0" maxX="11" maxY="0.0"/>
-                            <state key="normal" image="tab_add.png"/>
+                            <state key="normal" image="btn_add"/>
                             <state key="highlighted">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="addTab:" destination="-1" eventType="touchDown" id="142"/>
+                                <action selector="addTab:" destination="-1" eventType="touchUpInside" id="uxY-ne-sZa"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N2V-Yj-FIg" userLabel="Border Line">
@@ -89,8 +88,8 @@
                                 <constraint firstAttribute="height" constant="1" id="rU2-X4-8Vf"/>
                             </constraints>
                         </view>
-                        <scrollView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="2222" bounces="NO" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="134">
-                            <rect key="frame" x="5" y="58" width="271" height="23"/>
+                        <scrollView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="2222" bounces="NO" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="134">
+                            <rect key="frame" x="5" y="58" width="273" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XtV-SF-Wnb" userLabel="Border Line">
@@ -108,19 +107,19 @@
                             </constraints>
                         </scrollView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7y0-oe-UCm" userLabel="AddressBarButtons">
-                            <rect key="frame" x="281" y="26" width="32" height="32"/>
+                            <rect key="frame" x="281" y="23" width="32" height="32"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="65" userLabel="Refresh">
-                                    <rect key="frame" x="5" y="0.0" width="28" height="28"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <accessibility key="accessibilityConfiguration" label="Refresh"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="28" id="rqB-4O-W28"/>
-                                        <constraint firstAttribute="width" constant="28" id="s8u-KO-pQF"/>
+                                        <constraint firstAttribute="height" constant="32" id="rqB-4O-W28"/>
+                                        <constraint firstAttribute="width" constant="32" id="s8u-KO-pQF"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                    <state key="normal" title="refresh" image="refresh.png">
+                                    <state key="normal" image="btn_reload">
                                         <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -132,15 +131,15 @@
                                     </connections>
                                 </button>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="160" userLabel="Stop">
-                                    <rect key="frame" x="4" y="3" width="28" height="23"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <accessibility key="accessibilityConfiguration" label="Stop"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="23" id="Tav-jD-Sck"/>
-                                        <constraint firstAttribute="width" constant="28" id="hKo-8e-idH"/>
+                                        <constraint firstAttribute="height" constant="32" id="Tav-jD-Sck"/>
+                                        <constraint firstAttribute="width" constant="32" id="hKo-8e-idH"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
-                                    <state key="normal" title="X">
+                                    <state key="normal" image="btn_cancel">
                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -155,9 +154,9 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="32" id="2lZ-FM-mzW"/>
-                                <constraint firstItem="160" firstAttribute="top" secondItem="7y0-oe-UCm" secondAttribute="top" constant="3" id="3q8-rB-MH0"/>
-                                <constraint firstItem="65" firstAttribute="leading" secondItem="7y0-oe-UCm" secondAttribute="leading" constant="5" id="5WT-dk-zUs"/>
-                                <constraint firstItem="160" firstAttribute="leading" secondItem="7y0-oe-UCm" secondAttribute="leading" constant="4" id="NyV-uS-lKj"/>
+                                <constraint firstItem="160" firstAttribute="top" secondItem="7y0-oe-UCm" secondAttribute="top" id="3q8-rB-MH0"/>
+                                <constraint firstItem="65" firstAttribute="leading" secondItem="7y0-oe-UCm" secondAttribute="leading" id="5WT-dk-zUs"/>
+                                <constraint firstItem="160" firstAttribute="leading" secondItem="7y0-oe-UCm" secondAttribute="leading" id="NyV-uS-lKj"/>
                                 <constraint firstAttribute="height" constant="32" id="Uw1-78-BtR"/>
                                 <constraint firstItem="65" firstAttribute="top" secondItem="7y0-oe-UCm" secondAttribute="top" id="wEX-Fv-pEu"/>
                             </constraints>
@@ -169,7 +168,7 @@
                         <constraint firstItem="N2V-Yj-FIg" firstAttribute="leading" secondItem="202" secondAttribute="leading" id="91O-zt-ySr"/>
                         <constraint firstItem="212" firstAttribute="top" secondItem="134" secondAttribute="bottom" constant="-1" id="AP9-G2-vbm"/>
                         <constraint firstItem="134" firstAttribute="leading" secondItem="202" secondAttribute="leading" constant="5" id="Bu2-bO-FfV"/>
-                        <constraint firstItem="135" firstAttribute="top" secondItem="iFX-iJ-cHp" secondAttribute="bottom" constant="1" id="FTn-z9-Ea2"/>
+                        <constraint firstItem="135" firstAttribute="top" secondItem="iFX-iJ-cHp" secondAttribute="bottom" constant="4" id="FTn-z9-Ea2"/>
                         <constraint firstAttribute="bottom" secondItem="N2V-Yj-FIg" secondAttribute="bottom" id="Hgn-Fz-Af2"/>
                         <constraint firstItem="134" firstAttribute="top" secondItem="iFX-iJ-cHp" secondAttribute="bottom" constant="4" id="NPK-Ks-30p"/>
                         <constraint firstAttribute="trailing" secondItem="135" secondAttribute="trailing" id="Ov1-7l-hDO"/>
@@ -178,7 +177,7 @@
                         <constraint firstAttribute="trailing" secondItem="N2V-Yj-FIg" secondAttribute="trailing" id="UWO-ap-gWL"/>
                         <constraint firstAttribute="trailing" secondItem="iFX-iJ-cHp" secondAttribute="trailing" constant="7" id="VSV-nH-bbk"/>
                         <constraint firstItem="212" firstAttribute="leading" secondItem="202" secondAttribute="leading" constant="-4" id="YwJ-dI-xiz"/>
-                        <constraint firstItem="7y0-oe-UCm" firstAttribute="top" secondItem="202" secondAttribute="top" constant="26" id="aQT-FE-UsE"/>
+                        <constraint firstItem="7y0-oe-UCm" firstAttribute="top" secondItem="202" secondAttribute="top" constant="23" id="aQT-FE-UsE"/>
                         <constraint firstItem="212" firstAttribute="top" secondItem="134" secondAttribute="bottom" constant="-1" id="e0Z-zk-6Wz"/>
                         <constraint firstItem="iFX-iJ-cHp" firstAttribute="leading" secondItem="202" secondAttribute="leading" constant="7" id="hAd-ed-4Aw"/>
                         <constraint firstItem="iFX-iJ-cHp" firstAttribute="top" secondItem="202" secondAttribute="top" constant="24" id="hcj-vu-K1D"/>
@@ -190,39 +189,37 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="18" userLabel="Bottom Toolbar">
                     <rect key="frame" x="0.0" y="436" width="321" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.91326530610000001" green="0.89858857680000004" blue="0.90959612379999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="tAZ-Hf-gOT"/>
                     </constraints>
                     <items>
-                        <barButtonItem enabled="NO" image="arrow-left.png" width="28" style="plain" id="22" userLabel="Back">
+                        <barButtonItem enabled="NO" image="btn_back" style="plain" id="22" userLabel="Back">
                             <inset key="imageInsets" minX="0.0" minY="2" maxX="0.0" maxY="-1"/>
                             <connections>
                                 <action selector="goBack:" destination="-1" id="31"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="184"/>
-                        <barButtonItem enabled="NO" image="arrow-right.png" width="43" style="plain" id="20" userLabel="Forward">
+                        <barButtonItem enabled="NO" image="btn_forward" style="plain" id="20" userLabel="Forward">
                             <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="-1"/>
                             <connections>
                                 <action selector="goForward:" destination="-1" id="30"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="185"/>
-                        <barButtonItem image="configure.png" style="plain" id="71" userLabel="More">
+                        <barButtonItem style="plain" systemItem="action" id="71" userLabel="More">
                             <connections>
                                 <action selector="showActionSheet:" destination="-1" id="166"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="186"/>
-                        <barButtonItem image="bookmarks.png" style="plain" id="73" userLabel="Bookmarks">
+                        <barButtonItem style="plain" systemItem="bookmarks" id="73" userLabel="Bookmarks">
                             <inset key="imageInsets" minX="0.0" minY="0.0" maxX="-5" maxY="0.0"/>
                             <connections>
                                 <action selector="showBookmarks:" destination="-1" id="183"/>
                             </connections>
                         </barButtonItem>
                     </items>
-                    <color key="tintColor" red="0.23921568627450979" green="0.70588235294117641" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                 </toolbar>
                 <view hidden="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="169" userLabel="Browser">
                     <rect key="frame" x="0.0" y="0.0" width="321" height="436"/>
@@ -239,6 +236,7 @@
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="tintColor" red="0.94509803920000002" green="0.25914681309999998" blue="0.29411764709999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="163" firstAttribute="top" secondItem="OFD-FE-RzX" secondAttribute="bottom" id="1Ue-ML-fLx"/>
                 <constraint firstItem="202" firstAttribute="leading" secondItem="123" secondAttribute="leading" id="2f1-ih-IYD"/>
@@ -266,11 +264,11 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow-left.png" width="20" height="20"/>
-        <image name="arrow-right.png" width="20" height="20"/>
-        <image name="bookmarks.png" width="40" height="40"/>
-        <image name="configure.png" width="40" height="40"/>
-        <image name="refresh.png" width="48" height="48"/>
-        <image name="tab_add.png" width="32" height="32"/>
+        <image name="btn_add" width="20" height="20"/>
+        <image name="btn_back" width="14" height="24"/>
+        <image name="btn_cancel" width="20" height="20"/>
+        <image name="btn_forward" width="14" height="24"/>
+        <image name="btn_reload" width="21" height="21"/>
+        <image name="textfield_bg" width="50" height="30"/>
     </resources>
 </document>

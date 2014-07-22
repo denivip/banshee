@@ -36,7 +36,7 @@
 		tabButton.titleLabel.font = [UIFont systemFontOfSize: 11];
 		[tabButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
-		tabButton.contentEdgeInsets = UIEdgeInsetsMake(0.0, 8.0, 0.0, 0.0);
+		tabButton.contentEdgeInsets = UIEdgeInsetsMake(0.0, 8.0, 3.0, 0.0);
 		tabButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		tabButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 	
@@ -44,13 +44,11 @@
 	
 		// Create close tab button
 		[self setCloseButton:[UIButton buttonWithType:UIButtonTypeCustom]];
-	
-		[closeButton setTitle:@"x" forState:UIControlStateNormal];
+
+        [closeButton setImage:[UIImage imageNamed:@"btn_close"] forState:UIControlStateNormal];
         [closeButton setAccessibilityLabel:@"close tab"];
-		[closeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-		closeButton.frame = CGRectMake(79.0, -1.0, 25.0, 25.0);
-		closeButton.titleLabel.font = [UIFont systemFontOfSize: 18];
-	
+		closeButton.frame = CGRectMake(77.0, -1.0, 25.0, 25.0);
+
 		// append views
 		[self addSubview:tabButton];
 		[self addSubview:closeButton];
@@ -83,10 +81,10 @@
 		// Set up interactions
 		[tabButton addTarget:viewController 
 					action:@selector(selectTab:)
-					forControlEvents:UIControlEventTouchDown];
+					forControlEvents:UIControlEventTouchUpInside];
 		[closeButton addTarget:viewController 
 					action:@selector(removeTab:)
-					forControlEvents:UIControlEventTouchDown];
+					forControlEvents:UIControlEventTouchUpInside];
 		
         //Set history
         [self setHistory:[[NSMutableArray alloc] initWithCapacity:0]];
@@ -284,8 +282,6 @@
     if (current) {
         [viewController currentWebViewDidFinishFinalLoad:webView_];
     }
-    
-    NSLog(@"Loaded url: %@", [webView_.request mainDocumentURL]);
     
     // set title
     NSString *tabTitle_ = [webView_ stringByEvaluatingJavaScriptFromString:@"document.title"];
