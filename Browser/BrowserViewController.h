@@ -30,8 +30,6 @@
 	IBOutlet UIBarButtonItem *backButton;
 	IBOutlet UIBarButtonItem *addressItem;
 	IBOutlet UIBarButtonItem *searchItem;
-	IBOutlet UIBarButtonItem *customButton;
-    IBOutlet UIBarButtonItem *customButton2;
 	IBOutlet UIBarButtonItem *moreButton;
 	IBOutlet UIBarButtonItem *bookmarkButton;
     
@@ -80,8 +78,6 @@
 @property(nonatomic,strong) UIBarButtonItem *backButton;
 @property(nonatomic,strong) UIBarButtonItem *addressItem;
 @property(nonatomic,strong) UIBarButtonItem *searchItem;
-@property(nonatomic,strong) UIBarButtonItem *customButton;
-@property(nonatomic,strong) UIBarButtonItem *customButton2;
 @property(nonatomic,strong) UIBarButtonItem *moreButton;
 @property(nonatomic,strong) UIBarButtonItem *bookmarkButton;
 
@@ -116,8 +112,6 @@
 -(IBAction) goForward:(id)sender;
 -(IBAction) stopLoading:(id)sender;
 -(IBAction) showBookmarks:(id)sender;
--(IBAction) customButtonClick:(id)sender;
--(IBAction) customButtonClick2:(id)sender;
 -(IBAction) scrollToTop:(id)sender;
 
 -(NSArray *) actionSheetButtons;
