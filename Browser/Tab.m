@@ -10,6 +10,8 @@
 #import "BookmarksFormController.h"
 #import "UIMainView.h"
 
+#import "ARBJavascriptBridgeCallback.h"
+
 @implementation Tab
 
 @synthesize tabButton, webView, closeButton, tabTitle, history, traverse, history_position, scrollPosition, currentURLString, currentURL, current, urlConnection, connectionURLString, actionSheetVisible, loadStartTime, loadEndTime, pageInfoJS, response, viewController, loading, pageData;
@@ -242,19 +244,21 @@
     if (request == nil) {
         return NO;
     }
-    
-    // CAPTURE PAGE LOAD
-    if ([[[request URL] absoluteString] isEqualToString:@"js:gh-page-loaded"]) {
+
+    NSURL *URL = [request URL];
+    ARBJavascriptBridgeCallback *callback = [[ARBJavascriptBridgeCallback alloc] initWithURL:URL];
+    if (callback && callback.method == ARBJavascriptBridgeCallbackMethodPageLoaded) {
+        // CAPTURE PAGE LOAD
         [self webViewDidFinishFinalLoad:webView_];
+        return NO;
     }
 
-    else if (! [viewController tabWebView:webView_ shouldStartLoadWithRequest:request]) {
-        [self webViewDidFinishFinalLoad:webView_];
+    if (! [viewController tabWebView:webView_ shouldStartLoadWithRequest:request]) {
         return NO;
     }
     
 	//CAPTURE USER LINK-CLICK.
-	else if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeFormSubmitted) {
+	if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeFormSubmitted) {
         if ([[[request URL] absoluteString] isEqualToString:[[request mainDocumentURL] absoluteString]]) {
             NSURL *URL = [request URL];
             if ([[URL absoluteString] isEqualToString:@"about:blank"]) {
@@ -289,21 +293,6 @@
         [self setTitle:@"Untitled"];
     } else {
         [self setTitle:tabTitle_];
-    }
-}
-
--(void) webViewDidFinishLoad:(UIWebView *)webView_ {
-    
-    
-    if (![[[webView_ request] URL] isFileURL] && currentURL != nil) {
-        [webView_ stringByEvaluatingJavaScriptFromString:@"if (document.getElementById('gh-page-loaded') == null && document.documentElement.innerHTML != '<head></head><body></body>') {"
-         "var iframe = document.createElement('IFRAME');"
-         "iframe.setAttribute('id','gh-page-loaded');"
-         "iframe.setAttribute('src', 'js:gh-page-loaded');"
-         "iframe.setAttribute('style', 'display:none');"
-         "document.body.appendChild(iframe);"
-         "iframe = null;"
-         "document.body.style.webkitTouchCallout='none';}" ];
     }
 }
 
