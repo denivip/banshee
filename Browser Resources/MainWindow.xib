@@ -25,7 +25,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="123" userLabel="Main" customClass="UIMainView">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="163" userLabel="Status Bar Line">
@@ -40,15 +40,11 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <subviews>
-                        <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="212">
-                            <rect key="frame" x="-4" y="80" width="326" height="3"/>
+                        <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="212">
+                            <rect key="frame" x="-4" y="81" width="326" height="2"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="3" id="LxP-ga-hCw"/>
-                            </constraints>
-                            <color key="progressTintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                         </progressView>
-                        <textField opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Search or enter address" minimumFontSize="17" background="textfield_bg" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iFX-iJ-cHp" userLabel="AddressBarTextField" customClass="ARBURLTextField">
+                        <textField opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Search or enter address" minimumFontSize="17" background="textfield_bg" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iFX-iJ-cHp" userLabel="AddressBarTextField" customClass="ARBURLTextField">
                             <rect key="frame" x="7" y="24" width="306" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -56,6 +52,9 @@
                             <accessibility key="accessibilityConfiguration" label="Address or search field">
                                 <accessibilityTraits key="traits" none="YES" playsSound="YES"/>
                             </accessibility>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="NIP-rV-aPm"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="webSearch" returnKeyType="go"/>
                             <connections>
@@ -63,7 +62,7 @@
                                 <action selector="gotoAddress:" destination="-1" eventType="editingDidEndOnExit" id="LwF-gJ-QBt"/>
                             </connections>
                         </textField>
-                        <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="135" userLabel="Add Tab">
+                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="135" userLabel="Add Tab">
                             <rect key="frame" x="278" y="58" width="42" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <accessibility key="accessibilityConfiguration" label="Add Tab"/>
@@ -88,22 +87,11 @@
                                 <constraint firstAttribute="height" constant="1" id="rU2-X4-8Vf"/>
                             </constraints>
                         </view>
-                        <scrollView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="2222" bounces="NO" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="134">
+                        <scrollView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="2222" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="134">
                             <rect key="frame" x="5" y="58" width="273" height="23"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XtV-SF-Wnb" userLabel="Border Line">
-                                    <rect key="frame" x="0.0" y="-1" width="0.0" height="1"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="1" id="4bY-ji-h4U"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
                             <constraints>
                                 <constraint firstAttribute="height" constant="23" id="2RG-VQ-TXM"/>
-                                <constraint firstAttribute="bottom" secondItem="XtV-SF-Wnb" secondAttribute="bottom" id="UuT-R9-wWQ"/>
                             </constraints>
                         </scrollView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7y0-oe-UCm" userLabel="AddressBarButtons">
@@ -164,21 +152,18 @@
                     </subviews>
                     <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="XtV-SF-Wnb" firstAttribute="leading" secondItem="202" secondAttribute="leading" constant="5" id="2fO-aw-smN"/>
                         <constraint firstItem="N2V-Yj-FIg" firstAttribute="leading" secondItem="202" secondAttribute="leading" id="91O-zt-ySr"/>
-                        <constraint firstItem="212" firstAttribute="top" secondItem="134" secondAttribute="bottom" constant="-1" id="AP9-G2-vbm"/>
+                        <constraint firstItem="212" firstAttribute="top" secondItem="134" secondAttribute="bottom" id="AP9-G2-vbm"/>
                         <constraint firstItem="134" firstAttribute="leading" secondItem="202" secondAttribute="leading" constant="5" id="Bu2-bO-FfV"/>
                         <constraint firstItem="135" firstAttribute="top" secondItem="iFX-iJ-cHp" secondAttribute="bottom" constant="4" id="FTn-z9-Ea2"/>
                         <constraint firstAttribute="bottom" secondItem="N2V-Yj-FIg" secondAttribute="bottom" id="Hgn-Fz-Af2"/>
                         <constraint firstItem="134" firstAttribute="top" secondItem="iFX-iJ-cHp" secondAttribute="bottom" constant="4" id="NPK-Ks-30p"/>
                         <constraint firstAttribute="trailing" secondItem="135" secondAttribute="trailing" id="Ov1-7l-hDO"/>
                         <constraint firstAttribute="height" constant="81" id="Pdb-Xh-yIL"/>
-                        <constraint firstAttribute="trailing" secondItem="XtV-SF-Wnb" secondAttribute="trailing" constant="315" id="RiO-09-S07"/>
                         <constraint firstAttribute="trailing" secondItem="N2V-Yj-FIg" secondAttribute="trailing" id="UWO-ap-gWL"/>
                         <constraint firstAttribute="trailing" secondItem="iFX-iJ-cHp" secondAttribute="trailing" constant="7" id="VSV-nH-bbk"/>
                         <constraint firstItem="212" firstAttribute="leading" secondItem="202" secondAttribute="leading" constant="-4" id="YwJ-dI-xiz"/>
                         <constraint firstItem="7y0-oe-UCm" firstAttribute="top" secondItem="202" secondAttribute="top" constant="23" id="aQT-FE-UsE"/>
-                        <constraint firstItem="212" firstAttribute="top" secondItem="134" secondAttribute="bottom" constant="-1" id="e0Z-zk-6Wz"/>
                         <constraint firstItem="iFX-iJ-cHp" firstAttribute="leading" secondItem="202" secondAttribute="leading" constant="7" id="hAd-ed-4Aw"/>
                         <constraint firstItem="iFX-iJ-cHp" firstAttribute="top" secondItem="202" secondAttribute="top" constant="24" id="hcj-vu-K1D"/>
                         <constraint firstAttribute="trailing" secondItem="212" secondAttribute="trailing" constant="-2" id="pYE-00-byb"/>
@@ -187,7 +172,7 @@
                     </constraints>
                 </view>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="18" userLabel="Bottom Toolbar">
-                    <rect key="frame" x="0.0" y="436" width="321" height="44"/>
+                    <rect key="frame" x="0.0" y="524" width="321" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="tAZ-Hf-gOT"/>
@@ -222,7 +207,7 @@
                     </items>
                 </toolbar>
                 <view hidden="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="169" userLabel="Browser">
-                    <rect key="frame" x="0.0" y="0.0" width="321" height="436"/>
+                    <rect key="frame" x="0.0" y="0.0" width="321" height="524"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
@@ -256,6 +241,7 @@
                 <constraint firstAttribute="trailing" secondItem="OFD-FE-RzX" secondAttribute="trailing" id="uyk-Re-6d9"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <connections>
                 <outlet property="controller" destination="-1" id="s78-Kk-I5V"/>
                 <outlet property="statusBarView" destination="OFD-FE-RzX" id="P44-VS-k5K"/>
