@@ -333,7 +333,7 @@
     
     // get the Tags at the touch location
     NSArray *r = [[webView stringByEvaluatingJavaScriptFromString:
-                      [NSString stringWithFormat:@"MyAppGetHTMLElementsAtPoint(%i,%i);",(NSInteger)pt.x,(NSInteger)pt.y - topOffset]] componentsSeparatedByString:@"|"];
+                      [NSString stringWithFormat:@"MyAppGetHTMLElementsAtPoint(%li,%li);",(long)pt.x,(long)pt.y - topOffset]] componentsSeparatedByString:@"|"];
     
     NSString *tags = [r objectAtIndex:0];
     NSString *url = [r objectAtIndex:1];

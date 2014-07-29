@@ -25,7 +25,7 @@
     
     NSMutableArray *history;
     int traverse;
-    int history_position;
+    NSInteger history_position;
     
     int scrollPosition;
     
@@ -55,7 +55,7 @@
 
 @property(nonatomic,strong) NSMutableArray *history;
 @property(nonatomic,assign) int traverse;
-@property(nonatomic,assign) int history_position;
+@property(nonatomic,assign) NSInteger history_position;
 
 @property(nonatomic,assign) int scrollPosition;
 
