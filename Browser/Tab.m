@@ -253,7 +253,9 @@
                 return NO;
 
             case ARBJavascriptBridgeCallbackMethodWindowOpen:
-                [viewController addTabWithURL:callback.windowOpenURL];
+                if (viewController.popupsEnabled) {
+                    [viewController addTabWithURL:callback.windowOpenURL];
+                }
                 return NO;
 
             default:

@@ -14,6 +14,7 @@
                 <outlet property="bottomBar" destination="18" id="JQP-nv-gPU"/>
                 <outlet property="forwardButton" destination="20" id="87"/>
                 <outlet property="moreButton" destination="71" id="167"/>
+                <outlet property="popupsButton" destination="miO-n3-hKY" id="LMe-eZ-oIa"/>
                 <outlet property="progressBar" destination="212" id="213"/>
                 <outlet property="refreshButton" destination="65" id="67"/>
                 <outlet property="stopButton" destination="160" id="162"/>
@@ -204,6 +205,12 @@
                                 <action selector="showBookmarks:" destination="-1" id="183"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="L1x-2d-K8i"/>
+                        <barButtonItem image="btn_nowindows" id="miO-n3-hKY" userLabel="Popups">
+                            <connections>
+                                <action selector="togglePopups:" destination="-1" id="KOe-ME-stv"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                 </toolbar>
                 <view hidden="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="169" userLabel="Browser">
@@ -254,6 +261,7 @@
         <image name="btn_back" width="14" height="24"/>
         <image name="btn_cancel" width="20" height="20"/>
         <image name="btn_forward" width="14" height="24"/>
+        <image name="btn_nowindows" width="24" height="23"/>
         <image name="btn_reload" width="21" height="21"/>
         <image name="textfield_bg" width="50" height="30"/>
     </resources>

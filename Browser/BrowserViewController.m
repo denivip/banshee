@@ -905,6 +905,17 @@ typedef enum ScrollDirection {
 
 }
 
+- (IBAction)togglePopups:(id)sender
+{
+    self.popupsEnabled = !self.popupsEnabled;
+    if (self.popupsEnabled) {
+        [self.popupsButton setImage:[UIImage imageNamed:@"btn_windows"]];
+    }
+    else {
+        [self.popupsButton setImage:[UIImage imageNamed:@"btn_nowindows"]];
+    }
+}
+
 #pragma mark - Override in subclass
 
 - (BOOL)tabWebView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request

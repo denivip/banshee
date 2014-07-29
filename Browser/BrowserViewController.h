@@ -80,6 +80,7 @@
 @property(nonatomic,strong) UIBarButtonItem *searchItem;
 @property(nonatomic,strong) UIBarButtonItem *moreButton;
 @property(nonatomic,strong) UIBarButtonItem *bookmarkButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *popupsButton;
 
 @property(nonatomic,strong) UIBarButtonItem *barItemPopoverPresenter;
 @property(nonatomic,strong) UIActionSheet *popupQuery;
@@ -99,6 +100,7 @@
 @property(nonatomic,assign) BOOL initialPageLoad;
 @property(nonatomic,assign) BOOL saveScrollPosition;
 @property(nonatomic, assign) NSInteger lastScrollContentOffset;
+@property (nonatomic) BOOL popupsEnabled;
 
 @property(nonatomic,strong) NSString *userAgent;
 
