@@ -245,10 +245,20 @@
 
     NSURL *URL = [request URL];
     ARBJavascriptBridgeCallback *callback = [[ARBJavascriptBridgeCallback alloc] initWithURL:URL];
-    if (callback && callback.method == ARBJavascriptBridgeCallbackMethodPageLoaded) {
-        // CAPTURE PAGE LOAD
-        [self webViewDidFinishFinalLoad:webView_];
-        return NO;
+    if (callback) {
+        switch (callback.method) {
+            case ARBJavascriptBridgeCallbackMethodPageLoaded:
+                // CAPTURE PAGE LOAD
+                [self webViewDidFinishFinalLoad:webView_];
+                return NO;
+
+            case ARBJavascriptBridgeCallbackMethodWindowOpen:
+                [viewController addTabWithURL:callback.windowOpenURL];
+                return NO;
+
+            default:
+                break;
+        }
     }
 
     if (! [viewController tabWebView:webView_ shouldStartLoadWithRequest:request]) {
