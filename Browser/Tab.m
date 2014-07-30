@@ -9,8 +9,14 @@
 #import "BrowserViewController.h"
 #import "BookmarksFormController.h"
 #import "UIMainView.h"
-
+#import "WebViewJavascriptBridge.h"
 #import "ARBJavascriptBridgeCallback.h"
+
+@interface Tab ()
+
+@property (nonatomic, strong) WebViewJavascriptBridge *bridge;
+
+@end
 
 @implementation Tab
 
@@ -96,6 +102,39 @@
 		[tabButton setTitle:@"New Tab" forState:UIControlStateHighlighted];
         
 
+        self.bridge = [WebViewJavascriptBridge bridgeForWebView:webView webViewDelegate:self handler:^(id data, WVJBResponseCallback responseCallback) {
+            ARBJavascriptBridgeCallback *callback = [[ARBJavascriptBridgeCallback alloc] initWithParameters:data];
+            if (callback) {
+                switch (callback.method) {
+                    case ARBJavascriptBridgeCallbackMethodPageLoaded:
+                        // CAPTURE PAGE LOAD
+                        [self webViewDidFinishFinalLoad:webView];
+                        break;
+
+                    case ARBJavascriptBridgeCallbackMethodWindowOpen:
+                        if (viewController.popupsEnabled) {
+                            [viewController addTabWithURL:callback.windowOpenURL];
+                        }
+                        break;
+
+                    case ARBJavascriptBridgeCallbackMethodLog:
+                        NSLog(@"[web] %@", callback.logMessage);
+                        break;
+
+                    case ARBJavascriptBridgeCallbackMethodSetLocation:
+                        if (viewController.popupsEnabled) {
+                            [viewController loadRequest:[NSURLRequest requestWithURL:callback.locationURL] inTab:viewController.selectedTab updateHistory:YES];
+                        }
+                        break;
+
+                    case ARBJavascriptBridgeCallbackMethodPlay:
+                        [viewController playVideoAtURL:callback.videoURL];
+                        break;
+                }
+            }
+            
+            responseCallback(@"Right back atcha");
+        }];
 	}
 	return self;
 }
@@ -243,30 +282,6 @@
         return NO;
     }
 
-    NSURL *URL = [request URL];
-    ARBJavascriptBridgeCallback *callback = [[ARBJavascriptBridgeCallback alloc] initWithURL:URL];
-    if (callback) {
-        switch (callback.method) {
-            case ARBJavascriptBridgeCallbackMethodPageLoaded:
-                // CAPTURE PAGE LOAD
-                [self webViewDidFinishFinalLoad:webView_];
-                return NO;
-
-            case ARBJavascriptBridgeCallbackMethodWindowOpen:
-                if (viewController.popupsEnabled) {
-                    [viewController addTabWithURL:callback.windowOpenURL];
-                }
-                return NO;
-
-            default:
-                break;
-        }
-    }
-
-    if (! [viewController tabWebView:webView_ shouldStartLoadWithRequest:request]) {
-        return NO;
-    }
-    
 	//CAPTURE USER LINK-CLICK.
 	if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeFormSubmitted) {
         if ([[[request URL] absoluteString] isEqualToString:[[request mainDocumentURL] absoluteString]]) {

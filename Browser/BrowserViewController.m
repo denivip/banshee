@@ -918,9 +918,6 @@ typedef enum ScrollDirection {
 
 #pragma mark - Override in subclass
 
-- (BOOL)tabWebView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
-{
-    return YES;
-}
+- (void)playVideoAtURL:(NSURL *)videoURL {}
 
 @end

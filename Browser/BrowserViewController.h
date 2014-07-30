@@ -150,6 +150,6 @@
 
 #pragma mark - Override in subclass
 
-- (BOOL)tabWebView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request;
+- (void)playVideoAtURL:(NSURL *)videoURL;
 
 @end
