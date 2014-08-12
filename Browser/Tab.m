@@ -105,32 +105,7 @@
         self.bridge = [WebViewJavascriptBridge bridgeForWebView:webView webViewDelegate:self handler:^(id data, WVJBResponseCallback responseCallback) {
             ARBJavascriptBridgeCallback *callback = [[ARBJavascriptBridgeCallback alloc] initWithParameters:data];
             if (callback) {
-                switch (callback.method) {
-                    case ARBJavascriptBridgeCallbackMethodPageLoaded:
-                        // CAPTURE PAGE LOAD
-                        [self webViewDidFinishFinalLoad:webView];
-                        break;
-
-                    case ARBJavascriptBridgeCallbackMethodWindowOpen:
-                        if (viewController.popupsEnabled) {
-                            [viewController addTabWithURL:callback.windowOpenURL];
-                        }
-                        break;
-
-                    case ARBJavascriptBridgeCallbackMethodLog:
-                        NSLog(@"[web] %@", callback.logMessage);
-                        break;
-
-                    case ARBJavascriptBridgeCallbackMethodSetLocation:
-                        if (viewController.popupsEnabled) {
-                            [viewController loadRequest:[NSURLRequest requestWithURL:callback.locationURL] inTab:viewController.selectedTab updateHistory:YES];
-                        }
-                        break;
-
-                    case ARBJavascriptBridgeCallbackMethodPlay:
-                        [viewController playVideoAtURL:callback.videoURL];
-                        break;
-                }
+                [self processJavascriptCallback:callback];
             }
             
             responseCallback(@"Right back atcha");
@@ -279,6 +254,12 @@
 -(BOOL) webView:(UIWebView*)webView_ shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
     
     if (request == nil) {
+        return NO;
+    }
+
+    ARBJavascriptBridgeCallback *callback = [[ARBJavascriptBridgeCallback alloc] initWithURL:[request URL]];
+    if (callback) {
+        [self processJavascriptCallback:callback];
         return NO;
     }
 
@@ -485,5 +466,34 @@
     traverse = 0;
 }
 
+- (void)processJavascriptCallback:(ARBJavascriptBridgeCallback *)callback
+{
+    switch (callback.method) {
+        case ARBJavascriptBridgeCallbackMethodPageLoaded:
+            // CAPTURE PAGE LOAD
+            [self webViewDidFinishFinalLoad:webView];
+            break;
+
+        case ARBJavascriptBridgeCallbackMethodWindowOpen:
+            if (viewController.popupsEnabled) {
+                [viewController addTabWithURL:callback.windowOpenURL];
+            }
+            break;
+
+        case ARBJavascriptBridgeCallbackMethodLog:
+            NSLog(@"[web] %@", callback.logMessage);
+            break;
+
+        case ARBJavascriptBridgeCallbackMethodSetLocation:
+            if (viewController.popupsEnabled) {
+                [viewController loadRequest:[NSURLRequest requestWithURL:callback.locationURL] inTab:viewController.selectedTab updateHistory:YES];
+            }
+            break;
+
+        case ARBJavascriptBridgeCallbackMethodPlay:
+            [viewController playVideoAtURL:callback.videoURL];
+            break;
+    }
+}
 
 @end
